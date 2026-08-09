@@ -1,4 +1,4 @@
-﻿# Титули CyberPW
+# Титули CyberPW
 
 Онлайн-довідник ланцюжків титулів для Perfect World / CyberPW.
 
@@ -19,13 +19,13 @@
 1. Відкрийте [онлайн-довідник](https://vitalikjukivskiy.github.io/titulPW/).
 2. Знайдіть потрібний ланцюжок або назву титулу через пошук браузера (`Ctrl+F`).
 3. Виконуйте етапи зверху вниз.
-4. Для автоматичних міток, прогресу та синхронізації без OCR використовуйте [CyberPW Assistant 1.0](https://github.com/vitalikjukivskiy/titul_helper/releases/tag/v1.0.0).
+4. Для автоматичних міток, прогресу та синхронізації без OCR використовуйте [CyberPW Assistant 2.0.20 Beta](https://github.com/vitalikjukivskiy/cyberpw-assistant-releases/releases).
 
 ## Пов’язані посилання
 
-- [CyberPW Assistant](https://github.com/vitalikjukivskiy/titul_helper)
-- [Завантажити 1.0](https://github.com/vitalikjukivskiy/titul_helper/releases/tag/v1.0.0)
-- [Новий гайд CyberPW Assistant](https://github.com/vitalikjukivskiy/titul_helper/blob/main/FORUM-GUIDE-1.0.md)
+- [CyberPW Assistant](https://github.com/vitalikjukivskiy/cyberpw-assistant-releases/releases)
+- [Завантажити актуальну версію](https://github.com/vitalikjukivskiy/cyberpw-assistant-releases/releases)
+- [Гайд CyberPW Assistant на форумі](https://forum.cyberpw.fun/index.php?threads/titulhelper-1-0.271/)
 - [Сайт CyberPW](https://cyberpw.fun/)
 - [Форум CyberPW](https://forum.cyberpw.fun/)
 
