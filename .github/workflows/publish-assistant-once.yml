@@ -4,7 +4,7 @@ on:
   push:
     branches: [main]
     paths:
-      - '_assistant-deploy/site-bundle.json.xz'
+      - '_assistant-deploy/**'
   workflow_dispatch:
 
 permissions:
@@ -29,7 +29,7 @@ jobs:
           import lzma
           from pathlib import Path, PurePosixPath
 
-          archive = Path('_assistant-deploy/site-bundle.json.xz').read_bytes()
+          archive = b''.join(Path(f'_assistant-deploy/site-bundle.part-{i:02d}').read_bytes() for i in range(1, 5))
           expected = '6b1c6f482b776c85d434267fbc071521db227de1dbb4898c356c326fe5f7e681'
           if hashlib.sha256(archive).hexdigest() != expected:
               raise SystemExit('Archive checksum mismatch; nothing published.')
