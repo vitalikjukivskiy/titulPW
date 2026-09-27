@@ -11,8 +11,8 @@ export async function GET(request:Request){
   const device=cookie(request,"show_device");
   const own=device?await db().prepare("SELECT id FROM players WHERE device_id = ?").bind(device).first<{id:number}>():null;
   return json({players:players.results.map(p=>({id:p.id,nickname:p.nickname,createdAt:p.created_at})),
-   history:draws.results.map(d=>{const entries=JSON.parse(d.entries) as string[];return{id:d.id,round:d.round,name:entries[d.winner_index],count:entries.length,finishedAt:d.finished_at}}),
-   active:active?{round:active.round,startedAt:active.started_at,count:(JSON.parse(active.entries) as string[]).length}:null,
+   history:draws.results.map(d=>{const entries=JSON.parse(d.entries) as string[];return{id:d.id,round:d.round,name:entries[d.winner_index],count:entries.length,entries,winnerIndex:d.winner_index,finishedAt:d.finished_at}}),
+   active:active?{round:active.round,startedAt:active.started_at,entries:JSON.parse(active.entries) as string[],count:(JSON.parse(active.entries) as string[]).length}:null,
    registrationOpen:setting?.registration_open!==0&&!active,myPlayerId:own?.id??null,serverNow:Date.now()});
  }catch(e){console.error("state error",e);return json({error:"Тимчасово немає зв’язку з розіграшем."},503)}
 }

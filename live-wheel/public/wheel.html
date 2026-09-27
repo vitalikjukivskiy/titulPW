@@ -356,11 +356,11 @@ window.POLE_AUDIO = {"theme": "SUQzBAAAAAAAIlRTU0UAAAAOAAADTGF2ZjYxLjcuMTAzAAAAA
   }
   async function spin(){
     if(!hostReady||sharedActive||state.phase!=='ready'||state.entries.length<2||!$('editor').hidden)return;
-    let remote;
-    try{remote=await hostAction({action:'start'});}catch(e){notify(e.message);await refreshShared();return;}
-    state.entries=remote.entries;state.round=remote.round;drawWheel();renderEntries();
     state.phase='preparing';lockControls(true);$('spinBtn').disabled=true;
     try{await sound.init();}catch{notify('Барабан працює без звуку: браузер не зміг запустити аудіо.');}
+    let remote;
+    try{remote=await hostAction({action:'start'});}catch(e){state.phase='ready';lockControls(false);notify(e.message);await refreshShared();return;}
+    state.entries=remote.entries;state.round=remote.round;drawWheel();renderEntries();
     state.snapshot=[...state.entries];const n=state.snapshot.length,arc=TAU/n;
     state.chosenIndex=remote.winnerIndex;state.pendingRemoval=null;
     const jitter=(randomUnit()-.5)*arc*.50,desired=normalize(-state.chosenIndex*arc+jitter);
