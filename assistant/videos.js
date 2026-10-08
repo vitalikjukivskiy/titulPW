@@ -1,5 +1,31 @@
-// Дати показано за київським часом (UTC+3 на дату публікації).
+// Вересневі Shorts зберігають дати за київським часом на дату публікації.
 window.CYBERPW_VIDEOS = [
+  {
+    "id": "hTDhvLA6LiM",
+    "originalTitle": "CyberPWAsistant. cyberpw.fun(паті дії та одночасне управління діями) #Cyberpw @CyberPW-Arena",
+    "title": "Паті-дії у кількох вікнах",
+    "category": "combat",
+    "module": "Паті-дії · Beta",
+    "seconds": 152,
+    "date": "2026-10-05",
+    "description": "Збір і розпуск паті, слідування, асист та ігрові макроси. Демонстрація до оновлення клієнта 07.10.",
+    "status": "beta",
+    "icon": "users",
+    "long": true
+  },
+  {
+    "id": "QXTomqLBf7k",
+    "originalTitle": "CyberPW Assistant update 2.72",
+    "title": "Чон-Пон, лялька та нові розділи",
+    "category": "all",
+    "module": "Огляд оновлення 27.09",
+    "seconds": 161,
+    "date": "2026-09-27",
+    "description": "VIP-лялька, Auto Чон-Пон, експорт предметів і складів, дошка оголошень та пошук паті. Демонстрація попередньої збірки.",
+    "status": "ready",
+    "icon": "log",
+    "long": true
+  },
   {
     "id": "yNslTHLQEzg",
     "originalTitle": "Крафт сетів (Cyber.pw Асистент)",
@@ -200,7 +226,7 @@ window.CYBERPW_VIDEOS = [
     "module": "Hotfix 2.0.68",
     "seconds": 20,
     "date": "2026-09-13",
-    "description": "Відео про попередній hotfix; поточний перевірений реліз — 2.0.70.",
+    "description": "Історичне відео про hotfix 2.0.68. Поточний опублікований інсталятор — 2.0.82-beta.",
     "status": "ready",
     "icon": "wrench"
   },
@@ -212,7 +238,7 @@ window.CYBERPW_VIDEOS = [
     "module": "Анонс / експеримент",
     "seconds": 24,
     "date": "2026-09-13",
-    "description": "Не продаємо як готову функцію. Подивись авторський анонс.",
+    "description": "Історичний анонс від 13.09. Нові можливості показані у відео «CyberPW Assistant update 2.72» від 27.09; дивись його в цій добірці.",
     "status": "preview",
     "icon": "users"
   },
@@ -224,7 +250,7 @@ window.CYBERPW_VIDEOS = [
     "module": "Анонс / експеримент",
     "seconds": 21,
     "date": "2026-09-13",
-    "description": "Попередня демонстрація, а не гарантія доступного сервісу.",
+    "description": "Історичний анонс від 13.09. Нові можливості показані у відео «CyberPW Assistant update 2.72» від 27.09; дивись його в цій добірці.",
     "status": "preview",
     "icon": "board"
   },
@@ -236,7 +262,7 @@ window.CYBERPW_VIDEOS = [
     "module": "Coming Soon",
     "seconds": 19,
     "date": "2026-09-13",
-    "description": "Повний розрахунок характеристик і онлайн-обмін ще не готові.",
+    "description": "Історичний анонс від 13.09. Нові можливості показані у відео «CyberPW Assistant update 2.72» від 27.09; дивись його в цій добірці.",
     "status": "preview",
     "icon": "armor"
   }

@@ -160,7 +160,7 @@
   const filteredVideos = () => videos.filter(video => filter === 'all' || video.category === filter);
   function makeVideoCard(video) {
     const article = node('article', 'short-card');
-    const link = node('a', 'short-poster'); link.href = `https://www.youtube.com/shorts/${video.id}`;
+    const link = node('a', 'short-poster'); link.href = `https://www.youtube.com/${video.long ? 'watch?v=' : 'shorts/'}${video.id}`;
     link.dataset.video = video.id; link.dataset.placement = 'shorts';
     link.setAttribute('aria-label', `${video.title}. Відео ${duration(video.seconds)}. ${video.status === 'preview' ? 'Анонс.' : ''}`);
     link.title = video.originalTitle;
@@ -172,7 +172,7 @@
     const top = node('span', 'short-top');
     const type = node('span', `short-type ${video.status === 'vip' ? 'vip' : video.status === 'preview' ? 'preview' : ''}`);
     type.append(icon(video.status === 'vip' ? 'crown' : video.status === 'preview' ? 'spark' : 'youtube'));
-    type.append(document.createTextNode(video.status === 'vip' ? 'VIP' : video.status === 'preview' ? 'Анонс' : 'Shorts'));
+    type.append(document.createTextNode(video.status === 'vip' ? 'VIP' : video.status === 'preview' ? 'Анонс' : video.status === 'beta' ? 'Beta' : video.long ? 'Відео' : 'Shorts'));
     top.append(type, node('span', 'short-duration', duration(video.seconds)));
     const bottom = node('span', 'short-bottom'); const play = node('span', 'small-play'); play.append(icon('play'));
     bottom.append(play, node('small', '', video.module), node('strong', '', video.title));

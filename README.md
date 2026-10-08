@@ -19,13 +19,16 @@
 1. Відкрийте [онлайн-довідник](https://vitalikjukivskiy.github.io/titulPW/).
 2. Знайдіть потрібний ланцюжок або назву титулу через пошук браузера (`Ctrl+F`).
 3. Виконуйте етапи зверху вниз.
-4. Для автоматичних міток, прогресу та синхронізації без OCR використовуйте [CyberPW Assistant 2.0.20 Beta](https://github.com/vitalikjukivskiy/cyberpw-assistant-releases/releases).
+4. Для автоматичних міток, прогресу та синхронізації без OCR використовуйте [CyberPW Assistant 2.0.82-beta](https://github.com/vitalikjukivskiy/cyberpw-assistant-releases/releases/tag/v2.0.82-beta).
+
+Актуальний опублікований інсталятор на 08.10.2026 — **2.0.82-beta**, prerelease від 07.10.2026. Живі дії на новому клієнті ще не підтверджені через відмову Windows у читанні процесу гри. Після перезапуску гри синхронізуйтеся повторно та перевірте нік персонажа.
 
 ## Пов’язані посилання
 
-- [CyberPW Assistant](https://github.com/vitalikjukivskiy/cyberpw-assistant-releases/releases)
-- [Завантажити актуальну версію](https://github.com/vitalikjukivskiy/cyberpw-assistant-releases/releases)
-- [Гайд CyberPW Assistant на форумі](https://forum.cyberpw.fun/index.php?threads/titulhelper-1-0.271/)
+- [Сайт CyberPW Assistant](https://vitalikjukivskiy.github.io/titulPW/assistant/)
+- [Завантажити 2.0.82-beta — інсталятор EXE](https://github.com/vitalikjukivskiy/cyberpw-assistant-releases/releases/download/v2.0.82-beta/CyberPW-Assistant-Setup.exe)
+- [Усі релізи та їхні обмеження](https://github.com/vitalikjukivskiy/cyberpw-assistant-releases/releases)
+- [Гайд CyberPW Assistant на форумі](https://forum.cyberpw.fun/index.php?threads/fox-face-cyberpw-assistant-zagalnij-gajd-po-mozlivostah.317/)
 - [Сайт CyberPW](https://cyberpw.fun/)
 - [Форум CyberPW](https://forum.cyberpw.fun/)
 
