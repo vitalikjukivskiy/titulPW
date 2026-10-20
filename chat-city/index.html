@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#faf6ec">
+  <meta property="og:title" content="Місто чату — Kit_Mihaylo">
+  <meta property="og:description" content="Мальоване місто друзів стріму. Знайди свій куточок і завітай до сусідів.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://vitalikjukivskiy.github.io/titulPW/chat-city/">
+  <meta property="og:image" content="https://vitalikjukivskiy.github.io/titulPW/chat-city/assets/town.webp">
+  <meta name="description" content="Місто чату Kit_Mihaylo. Знайди свій куточок на живій мальованій карті друзів стріму.">
+  <title>Місто чату — Kit_Mihaylo</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 60'%3E%3Ctext y='47' font-size='47'%3E🐾%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <svg class="svg-defs" xmlns="http://www.w3.org/2000/svg"><defs>
+    <symbol id="i-paw" viewBox="0 0 24 24"><path d="M8 13c-1 2-4 3-3 6s5 1 7 1 6 2 7-1-2-4-3-6-6-2-8 0Z"/><ellipse cx="5" cy="9" rx="2" ry="3" transform="rotate(-25 5 9)"/><ellipse cx="10" cy="5" rx="2" ry="3"/><ellipse cx="16" cy="5" rx="2" ry="3"/><ellipse cx="21" cy="10" rx="2" ry="3" transform="rotate(25 21 10)"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 1v2m0 18v2M1 12h2m18 0h2M4 4l2 2m12 12 2 2M4 20l2-2M18 6l2-2"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 15A9 9 0 0 1 9 3a9 9 0 1 0 11 12Z"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24"><path d="M19 10c0 5-7 11-7 11S5 15 5 10a7 7 0 0 1 14 0Z"/><circle cx="12" cy="10" r="2.5"/></symbol>
+    <symbol id="i-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="7"/><circle cx="12" cy="12" r="2"/><path d="M12 1v4m0 14v4M1 12h4m14 0h4"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M4 12h16m-6-6 6 6-6 6"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="m6 6 12 12M6 18 18 6"/></symbol>
+    <symbol id="i-sound" viewBox="0 0 24 24"><path d="M4 9h4l5-4v14l-5-4H4Zm12-1a6 6 0 0 1 0 8m3-11a10 10 0 0 1 0 14"/></symbol>
+  </defs></svg>
+  <header class="topbar">
+    <a class="brand" href="#" aria-label="Місто чату — вся карта"><svg class="paw"><use href="#i-paw"/></svg><span>місто чату<span class="brand-dot">.</span></span></a>
+    <span class="brand-divider"></span><span class="channel">Kit_Mihaylo<span>Тут усі свої</span></span>
+    <nav aria-label="Керування містом">
+      <span class="edition">МАЛЬОВАНИЙ СВІТ · VOL. 01</span>
+      <button id="themeBtn" class="icon-btn" aria-label="Увімкнути ніч" title="День / ніч"><svg><use href="#i-sun"/></svg></button>
+      <button id="residentsBtn" class="primary-btn"><svg><use href="#i-paw"/></svg><span>Мешканці</span><b>13</b></button>
+    </nav>
+  </header>
+  <main>
+    <section class="map-shell" aria-label="Інтерактивна карта міста">
+      <div class="intro"><div class="eyebrow"><span></span> ЗБУДОВАНО ДРУЗЯМИ СТРІМУ</div><h1>Кожен нік —<br>своя <em>історія.</em><svg viewBox="0 0 170 15" aria-hidden="true"><path d="M4 10Q80 0 165 7M28 13q67-8 115-3"/></svg></h1><p>Знайди свій куточок.<br>Зазирни до сусідів. Залишайся вдома.</p>
+        <div class="search-wrap"><svg><use href="#i-search"/></svg><input id="search" placeholder="Знайти мешканця…" aria-label="Знайти мешканця" autocomplete="off"><kbd>/</kbd></div>
+        <div id="searchResults" class="search-results" hidden></div>
+        <button id="tourBtn" class="tour-btn">Прогулятися містом <svg><use href="#i-arrow"/></svg></button>
+      </div>
+      <div id="viewport" class="map-viewport" tabindex="0" aria-label="Карта. Перетягуйте, щоб рухатися; кнопки плюс і мінус змінюють масштаб.">
+        <div id="world" class="world">
+          <img class="map-art" src="assets/town.webp" alt="Мальоване місто: замок, офіс, кланхол Тандерів, тихий ліс, квітковий сад, майстерня хелпера, озеро, атракціони, охорона, будиночок, серверна й завод енергетиків." draggable="false" width="1600" height="1000">
+          <div class="night-veil"></div>
+          <div id="ambient" class="ambient" aria-hidden="true"></div>
+          <div id="markers" class="markers"></div>
+          <button class="mayor" id="mayor" aria-label="Погладити Мішу — чорного кота-мера міста" title="Мер міста теж хоче уваги">♡</button>
+        </div>
+        <div class="rain-layer" aria-hidden="true"></div>
+      </div>
+      <div class="map-notes"><span class="handwritten">Будиночки справжні.<br>У межах нашої уяви.</span><svg viewBox="0 0 85 55" aria-hidden="true"><path d="M4 5q67-1 52 36m-9-9 9 12 12-10"/></svg></div>
+      <div class="legend"><span><i class="orange"></i>Місця</span><span><i class="green"></i>Природа</span><span><i class="pink"></i>Двіж</span></div>
+      <div class="map-tip" id="mapTip"><svg class="paw"><use href="#i-paw"/></svg><span>Натисни на локацію — познайомся з мешканцем</span></div>
+      <div class="map-controls"><div class="zoom-group"><button id="zoomIn" aria-label="Наблизити">+</button><span id="zoomLevel">100%</span><button id="zoomOut" aria-label="Віддалити">−</button></div><button id="resetMap" class="icon-btn" aria-label="Показати все місто" title="Показати все місто"><svg><use href="#i-target"/></svg></button><button id="rainBtn" class="icon-btn" aria-label="Увімкнути дощ" title="Трохи дощу">☂</button></div>
+      <div class="tour-progress" id="tourProgress" hidden><span id="tourText"></span><button id="tourStop" aria-label="Завершити прогулянку">Завершити ×</button></div>
+    </section>
+    <footer><span><svg class="paw"><use href="#i-paw"/></svg> Маленьке місто. Великий чат.</span><span id="exploredCount">Відкрито 0 із 12 місць</span><button id="aboutBtn">Як живе місто <span>↗</span></button></footer>
+  </main>
+  <div class="drawer-backdrop" id="drawerBackdrop" hidden></div>
+  <aside id="directory" class="directory" aria-label="Мешканці міста" aria-hidden="true" inert>
+    <div class="drawer-heading"><div><div class="eyebrow">НАШІ ЛЮДИ</div><h2>Тут усі свої<span>.</span></h2></div><button id="closeDirectory" class="icon-btn" aria-label="Закрити мешканців"><svg><use href="#i-close"/></svg></button></div>
+    <p class="directory-copy">12 особливих місць. 13 мешканців.<br>І ціле місто вдячності за підтримку.</p>
+    <div id="filters" class="filters"><button class="active" data-category="all">Усі</button><button data-category="place">Місця</button><button data-category="nature">Природа</button><button data-category="fun">Двіж</button></div>
+    <div id="residentsList" class="residents-list"></div><p class="directory-foot">Місто росте разом із нашим чатом ♡</p>
+  </aside>
+  <section id="detail" class="detail" role="dialog" aria-modal="false" aria-label="Локація мешканця" hidden>
+    <div id="detailArt" class="detail-art"><span class="detail-number" id="detailNumber"></span><button id="closeDetail" class="icon-btn" aria-label="Закрити локацію"><svg><use href="#i-close"/></svg></button></div>
+    <div class="detail-body"><div id="detailCategory" class="eyebrow"></div><h2 id="detailName"></h2><h3 id="detailPlace"></h3><p id="detailDescription"></p><div id="detailQuote" class="detail-quote"></div><div class="detail-tags" id="detailTags"></div><div class="detail-actions"><button class="primary-btn" id="locationAction"></button><button class="icon-btn" id="shareBtn" aria-label="Скопіювати посилання на локацію" title="Поділитися локацією">↗</button></div><button class="next-neighbor" id="nextNeighbor">До наступного сусіда <svg><use href="#i-arrow"/></svg></button></div>
+  </section>
+  <dialog id="aboutDialog"><button id="closeAbout" class="icon-btn" aria-label="Закрити"><svg><use href="#i-close"/></svg></button><span class="about-cat">🐈‍⬛</span><div class="eyebrow">ЛАСКАВО ПРОСИМО ДОДОМУ</div><h2>Це місто — про вас.</h2><p>Кожна локація присвячена людині, яка підтримує стрім Kit_Mihaylo. Тут немає рейтингу гаманців: у кожного є свій характер, свій куточок і свої сусіди.</p><p>Натискай на таблички, шукай друзів, гуляй із гідом і спробуй нічний режим. Кота в центрі теж можна погладити.</p><p class="small">Позначки відвіданих місць і налаштування зберігаються лише в цьому браузері. Автоматичного зв’язку з донатами поки немає.</p><button id="startExploring" class="primary-btn">Ходімо гуляти <span>→</span></button></dialog>
+  <div id="toast" role="status" class="toast" aria-live="polite"></div>
+  <script src="residents.js"></script><script src="app.js"></script>
+</body>
+</html>
