@@ -69,23 +69,6 @@
   if (downloadUrl) $$('[data-download]').forEach(link => {
     link.href = downloadUrl; link.target = '_blank'; link.rel = 'noopener noreferrer';
   });
-  const vip = cfg.vip || {};
-  const checkoutUrl = safeUrl(vip.checkoutUrl);
-  const contactUrl = safeUrl(vip.contactUrl);
-  if (contactUrl) $('#vip-contact').href = contactUrl;
-  if (checkoutUrl) {
-    $$('[data-vip]').forEach(link => {
-      link.href = checkoutUrl; link.target = '_blank'; link.rel = 'noopener noreferrer';
-    });
-    $$('[data-vip-label]').forEach(label => { label.textContent = 'Придбати VIP'; });
-  }
-  if (typeof vip.price === 'number' && Number.isFinite(vip.price) && vip.price > 0) {
-    const value = new Intl.NumberFormat('uk-UA', { maximumFractionDigits: 2 }).format(vip.price);
-    $$('[data-vip-price]').forEach(element => {
-      element.textContent = `${value} ${String(vip.currency || 'грн')}${vip.period ? ' / ' + String(vip.period) : ''}`;
-    });
-  }
-
   // Selectable feature demonstrations with accessible keyboard navigation.
   const forum = 'https://forum.cyberpw.fun/index.php?threads/';
   const features = {
@@ -170,9 +153,9 @@
     image.dataset.backup = `https://i.ytimg.com/vi/${video.id}/hqdefault.jpg`;
     const shade = node('span', 'short-shade');
     const top = node('span', 'short-top');
-    const type = node('span', `short-type ${video.status === 'vip' ? 'vip' : video.status === 'preview' ? 'preview' : ''}`);
-    type.append(icon(video.status === 'vip' ? 'crown' : video.status === 'preview' ? 'spark' : 'youtube'));
-    type.append(document.createTextNode(video.status === 'vip' ? 'VIP' : video.status === 'preview' ? 'Анонс' : video.status === 'beta' ? 'Beta' : video.long ? 'Відео' : 'Shorts'));
+    const type = node('span', `short-type ${video.status === 'vip' ? 'free' : video.status === 'preview' ? 'preview' : ''}`);
+    type.append(icon(video.status === 'vip' ? 'spark' : video.status === 'preview' ? 'spark' : 'youtube'));
+    type.append(document.createTextNode(video.status === 'vip' ? 'Безкоштовно' : video.status === 'preview' ? 'Анонс' : video.status === 'beta' ? 'Beta' : video.long ? 'Відео' : 'Shorts'));
     top.append(type, node('span', 'short-duration', duration(video.seconds)));
     const bottom = node('span', 'short-bottom'); const play = node('span', 'small-play'); play.append(icon('play'));
     bottom.append(play, node('small', '', video.module), node('strong', '', video.title));
@@ -206,7 +189,7 @@
   // Lazy, user-initiated YouTube embed. No iframe or playback before a click.
   const overview = { id: 'dyzDBIT_HRo', title: 'Повний огляд CyberPW Assistant', originalTitle: 'Сyber.pw Асистент (повний огляд)', long: true };
   let currentVideo = null; let videoQueue = []; let lastTrigger = null;
-  const videoDialog = $('#video-modal'); const vipDialog = $('#vip-modal');
+  const videoDialog = $('#video-modal');
   const canUseDialog = typeof videoDialog.showModal === 'function';
   function cleanupDialog(dialog) {
     if (dialog === videoDialog) { $('#player-wrap').replaceChildren(); currentVideo = null; }
@@ -218,7 +201,7 @@
     document.body.classList.add('modal-open');
   }
   function closeDialog(dialog) { if (dialog.open) dialog.close(); }
-  [videoDialog, vipDialog].forEach(dialog => {
+  [videoDialog].forEach(dialog => {
     dialog.addEventListener('close', () => {
       cleanupDialog(dialog);
       if (lastTrigger && document.contains(lastTrigger) && typeof lastTrigger.focus === 'function') lastTrigger.focus({ preventScroll: true });
@@ -284,33 +267,10 @@
       if (openVideo(video.dataset.video, video)) event.preventDefault();
       return;
     }
-    const vipLink = event.target.closest('[data-vip]');
-    if (vipLink) {
-      if (checkoutUrl) {
-        track('checkout_click', { placement: vipLink.dataset.placement || 'unknown' });
-      } else if (canUseDialog && !event.ctrlKey && !event.metaKey) {
-        event.preventDefault(); openDialog(vipDialog, vipLink);
-        track('vip_open', { placement: vipLink.dataset.placement || 'unknown' });
-      }
-      return;
-    }
     const download = event.target.closest('[data-download]');
     if (download) track('download_click', { placement: download.dataset.placement || 'unknown' });
     if (event.target.closest('#vip-contact')) track('vip_contact_click');
   });
-  $('#copy-vip').addEventListener('click', async () => {
-    const text = $('#vip-request'); let copied = false;
-    try {
-      if (navigator.clipboard && window.isSecureContext) { await navigator.clipboard.writeText(text.value); copied = true; }
-    } catch (_) { /* The accessible text field below remains a fallback. */ }
-    if (!copied) {
-      text.focus(); text.select();
-      try { copied = document.execCommand('copy'); } catch (_) { copied = false; }
-    }
-    toast(copied ? 'Запит скопійовано. Відкрий профіль автора на форумі.' : 'Текст виділено. Скопіюй його вручну.');
-    if (copied) track('vip_request_copied');
-  });
-
   // Small-screen navigation; native anchor navigation still works without JavaScript.
   const menu = $('#menu-toggle'); const links = $('#nav-links');
   function closeMenu() { links.classList.remove('open'); menu.setAttribute('aria-expanded', 'false'); menu.setAttribute('aria-label', 'Відкрити меню'); }
@@ -331,7 +291,7 @@
         $$('#nav-links a').forEach(link => link.classList.toggle('active', link.getAttribute('href') === `#${entry.target.id}`));
       });
     }, { rootMargin: '-15% 0px -55% 0px' });
-    ['features', 'catalog', 'videos', 'vip', 'news', 'roadmap', 'guides'].forEach(id => sectionObserver.observe(document.getElementById(id)));
+    ['features', 'catalog', 'videos', 'free-pilot', 'news', 'roadmap', 'guides'].forEach(id => sectionObserver.observe(document.getElementById(id)));
   } else {
     window.addEventListener('scroll', () => $('#mobile-bar').classList.toggle('visible', window.scrollY > 550), { passive: true });
   }
