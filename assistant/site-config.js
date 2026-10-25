@@ -5,13 +5,6 @@ window.CYBERPW_SITE_CONFIG = {
   "releasesUrl": "https://github.com/vitalikjukivskiy/cyberpw-assistant-releases/releases",
   "forumUrl": "https://forum.cyberpw.fun/index.php?threads/fox-face-cyberpw-assistant-zagalnij-gajd-po-mozlivostah.317/",
   "youtubeUrl": "https://www.youtube.com/@Vitalik_Juk",
-  "vip": {
-    "price": null,
-    "currency": "грн",
-    "period": "",
-    "checkoutUrl": "",
-    "contactUrl": "https://forum.cyberpw.fun/index.php?members/vetuk.1042/"
-  },
   "analyticsEnabled": false,
   "publishedVersion": "2.0.82-beta",
   "publishedAt": "2026-10-07",
