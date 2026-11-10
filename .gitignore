@@ -1,0 +1,8 @@
+live-wheel/node_modules/
+live-wheel/dist/
+live-wheel/.next/
+live-wheel/.wrangler/
+live-wheel/.env*
+!live-wheel/.env.example
+live-wheel/.dev.vars*
+live-wheel/*.tsbuildinfo

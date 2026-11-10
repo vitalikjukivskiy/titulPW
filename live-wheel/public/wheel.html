@@ -59,6 +59,7 @@ body.studio-mode .control-column{display:none}body.studio-mode .show-layout{grid
 #hostPanel h3{font:600 21px Georgia;margin:4px 0 10px;color:#f7dfaa}#hostPanel p{color:#d2b6a8;font-size:13px;line-height:1.5}
 #hostPanel .host-row{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:6px 0;border-top:1px solid #ffffff20;overflow-wrap:anywhere}
 #hostPanel .host-row button{padding:4px 8px}#hostPanel .host-actions{display:flex;gap:8px;flex-wrap:wrap}
+#hostPanel #hostRemoveAll{background:transparent;color:#f4b4b4;border-color:#bd7373;font-size:11px;padding:7px 10px}
 #hostPanel a{color:#f3d698}#editBtn,#shuffleBtn,#presetSelect,#removeWinner,#clearHistoryBtn{display:none!important}
 </style></head>
 <body>
@@ -122,7 +123,7 @@ body.studio-mode .control-column{display:none}body.studio-mode .show-layout{grid
     <div id="historyView" role="tabpanel" aria-labelledby="historyTab" hidden><ol class="history-list" id="historyList"></ol><div class="empty-history" id="emptyHistory"><span>✧</span>Перший переможець<br>ще попереду.</div><button class="text-button" id="clearHistoryBtn">Очистити історію</button></div>
     <div class="roster-bottom"><label class="toggle-label"><input type="checkbox" id="removeWinner"><span class="switch"></span><span>Прибирати переможця зі списку</span></label><div class="preset-row"><label for="presetSelect">Готові сектори</label><select id="presetSelect"><option value="names">Учасники</option><option value="show">Класичний барабан</option><option value="blank">Новий список</option></select></div></div>
    </section>
-   <section id="hostPanel" hidden><div class="panel-eyebrow">УПРАВЛІННЯ ЕФІРОМ</div><h3>Реєстрація гравців</h3><p id="hostStatus">Завантажуємо список…</p><div class="host-actions"><button id="hostOpen">Відкрити запис</button><button id="hostClose">Закрити запис</button></div><p><a href="/" target="_blank" rel="noopener">Відкрити сторінку учасників ↗</a></p><div id="hostPlayers"></div></section>
+   <section id="hostPanel" hidden><div class="panel-eyebrow">УПРАВЛІННЯ ЕФІРОМ</div><h3>Реєстрація гравців</h3><p id="hostStatus">Завантажуємо список…</p><div class="host-actions"><button id="hostOpen">Відкрити запис</button><button id="hostClose">Закрити запис</button><button id="hostRemoveAll" type="button" disabled>Видалити всіх учасників</button></div><p><a href="/" target="_blank" rel="noopener">Відкрити сторінку учасників ↗</a></p><form id="streamForm"><label for="streamUrl">YouTube-стрім для всіх глядачів</label><input id="streamUrl" type="url" placeholder="https://www.youtube.com/live/…" style="width:100%;margin:8px 0;padding:10px;background:#20131c;border:1px solid #b28b57;color:#f2d5a6"><button type="submit">Прив’язати стрім</button><p id="streamStatus" role="status">Встав посилання на конкретний ефір. Порожнє поле від’єднує його.</p></form><div id="hostPlayers"></div><h3>Останні донати</h3><p>50 грн = +1 квиток. До 10 квитків разом із безкоштовним. Після старту — наступний раунд. Донати без коду потребують звірки з донатором.</p><div id="hostDonations"></div></section>
    <section class="audio-panel" aria-labelledby="musicHeading">
     <div class="audio-main"><div class="cassette-icon"><svg><use href="#i-cassette"/></svg></div><div class="audio-title"><span class="panel-eyebrow" id="musicHeading">МУЗИКА ЕФІРУ</span><strong id="trackName">Ретро-оркестр</strong><span class="audio-subtitle" id="trackSubtitle">Вбудований саундтрек · 60 сек</span></div><button class="preview-button" id="previewBtn" title="Прослухати музику" aria-label="Прослухати музику"><svg><use href="#i-play"/></svg></button></div>
     <div class="volume-row"><svg><use href="#i-volume"/></svg><input type="range" id="volumeSlider" min="0" max="100" value="55" aria-label="Гучність"><span id="volumeValue">55%</span><div class="equalizer" id="equalizer" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div></div>
@@ -161,7 +162,7 @@ window.POLE_AUDIO = {"theme": "SUQzBAAAAAAAIlRTU0UAAAAOAAADTGF2ZjYxLjcuMTAzAAAAA
   const COLORS = ['#d1b77c','#914250','#386b65','#577b94','#bf8846','#393340','#a65b4c','#829784','#dfcea1','#7c4b63','#4e6e8e','#a18549'];
   const INKS = ['#382a24','#fff0ca','#f8eacc','#fff0d0','#352825','#f6da9b','#fff0d1','#282e29','#402f29','#ffead1','#f4e2bc','#fff2d4'];
   const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const state = {entries:[...NAMES], history:[], round:1, angle:0, phase:'welcome', preset:'names', muted:false, volume:.55, removeWinner:false, snapshot:null, chosenIndex:null, lastResult:null, start:0, progress:0, customTrackName:'', pendingRemoval:null};
+  const state = {entries:[...NAMES], weights:[], history:[], round:1, angle:0, phase:'welcome', preset:'names', muted:false, volume:.55, removeWinner:false, snapshot:null, chosenIndex:null, lastResult:null, start:0, progress:0, customTrackName:'', pendingRemoval:null};
   let animationId=0, toastTimer=0, previousTick=0, previousSecond=-1, lastTickTime=0, previewTimer=0;
 
   function notify(text) { $('toast').textContent=text; $('toast').hidden=false; clearTimeout(toastTimer); toastTimer=setTimeout(()=>{$('toast').hidden=true;},4200); }
@@ -191,7 +192,8 @@ window.POLE_AUDIO = {"theme": "SUQzBAAAAAAAIlRTU0UAAAAOAAADTGF2ZjYxLjcuMTAzAAAAA
   }
   const randomUnit=()=>uniformInt(1000000)/1000000;
   const normalize=x=>((x%TAU)+TAU)%TAU;
-  function sectorAt(angle,n) { const arc=TAU/n; return Math.floor((normalize(-angle)+arc/2)/arc)%n; }
+  function wheelSlices(n){const weights=Array.from({length:n},(_,i)=>state.weights[i]||5),total=weights.reduce((a,b)=>a+b,0);let start=-(weights[0]||0)/total/2;return weights.map(w=>{const width=w/total,s={start,width,middle:start+width/2};start+=width;return s})}
+  function sectorAt(angle,n){if(!n)return 0;const slices=wheelSlices(n),point=normalize(-angle)/TAU;return slices.findIndex(s=>((point-s.start)%1+1)%1<s.width)}
   function motionProgress(t) {
     // Integrated velocity: 2.1s acceleration, steady spin, 18s deceleration.
     // Continuous position and velocity; zero velocity at both ends.
@@ -290,7 +292,7 @@ window.POLE_AUDIO = {"theme": "SUQzBAAAAAAAIlRTU0UAAAAOAAADTGF2ZjYxLjcuMTAzAAAAA
     const canvas=$('wheel'),ctx=canvas.getContext('2d'),size=canvas.width,r=size/2-5,n=state.entries.length,arc=TAU/n;
     ctx.clearRect(0,0,size,size);ctx.save();ctx.translate(size/2,size/2);
     for(let i=0;i<n;i++){
-      const start=-Math.PI/2-arc/2+i*arc,mid=start+arc/2,end=start+arc;
+      const slice=wheelSlices(n)[i],arc=slice.width*TAU,start=-Math.PI/2+slice.start*TAU,mid=start+arc/2,end=start+arc;
       ctx.beginPath();ctx.moveTo(0,0);ctx.arc(0,0,r,start,end);ctx.closePath();ctx.fillStyle=COLORS[i%COLORS.length];ctx.fill();
       const shade=ctx.createRadialGradient(0,0,35,0,0,r);shade.addColorStop(0,'#0c07112a');shade.addColorStop(.68,'#fff3c907');shade.addColorStop(1,'#130a132d');ctx.fillStyle=shade;ctx.fill();
       ctx.strokeStyle='#e6c990b0';ctx.lineWidth=n>40?1:2.5;ctx.stroke();
@@ -355,15 +357,15 @@ window.POLE_AUDIO = {"theme": "SUQzBAAAAAAAIlRTU0UAAAAOAAADTGF2ZjYxLjcuMTAzAAAAA
     setTimeout(()=>{$('welcome').hidden=true;document.body.classList.remove('welcome-open');state.phase='ready';renderEntries();$('spinBtn').focus({preventScroll:true});persist();},reduceMotion?180:1200);
   }
   async function spin(){
-    if(!hostReady||sharedActive||state.phase!=='ready'||state.entries.length<2||!$('editor').hidden)return;
+    if(!hostReady||removingAll||sharedActive||state.phase!=='ready'||state.entries.length<2||!$('editor').hidden)return;
     state.phase='preparing';lockControls(true);$('spinBtn').disabled=true;
     try{await sound.init();}catch{notify('Барабан працює без звуку: браузер не зміг запустити аудіо.');}
     let remote;
     try{remote=await hostAction({action:'start'});}catch(e){state.phase='ready';lockControls(false);notify(e.message);await refreshShared();return;}
-    state.entries=remote.entries;state.round=remote.round;drawWheel();renderEntries();
+    state.entries=remote.entries;state.weights=remote.weights;state.round=remote.round;drawWheel();renderEntries();
     state.snapshot=[...state.entries];const n=state.snapshot.length,arc=TAU/n;
     state.chosenIndex=remote.winnerIndex;state.pendingRemoval=null;
-    const jitter=(randomUnit()-.5)*arc*.50,desired=normalize(-state.chosenIndex*arc+jitter);
+    const chosen=wheelSlices(n)[state.chosenIndex],jitter=(randomUnit()-.5)*chosen.width*TAU*.50,desired=normalize(-chosen.middle*TAU+jitter);
     const startAngle=normalize(state.angle),endAngle=startAngle+(34+uniformInt(7))*TAU+normalize(desired-startAngle);
     state.angle=startAngle;state.start=performance.now();state.phase='spinning';state.progress=0;
     previousTick=sectorAt(startAngle,n);previousSecond=-1;lastTickTime=0;
@@ -396,7 +398,7 @@ window.POLE_AUDIO = {"theme": "SUQzBAAAAAAAIlRTU0UAAAAOAAADTGF2ZjYxLjcuMTAzAAAAA
     $('winnerTitle').textContent=name;$('winnerRound').textContent=`РАУНД ${String(state.round).padStart(2,'0')} ЗАВЕРШЕНО`;
     $('winnerEyebrow').textContent=state.preset==='show'?'ВАШ ЩАСЛИВИЙ СЕКТОР':'ВАШ ПЕРЕМОЖЕЦЬ';
     document.querySelector('.winner-name-frame').classList.toggle('long',name.length>14);
-    $('winnerStat').textContent=`1 із ${state.snapshot.length} секторів · 60 секунд інтриги`;
+    $('winnerStat').textContent=`${state.weights[index]} із ${state.weights.reduce((a,b)=>a+b,0)} квитків · 60 секунд інтриги`;
     clearTimeout(toastTimer);$('toast').hidden=true;$('winnerScreen').hidden=false;document.querySelector('.app-shell').inert=true;document.body.style.overflow='hidden';
     if(sound.buffers)sound.fanfare();else sound.stopMusic();
     launchFireworks();$('nextRoundBtn').focus({preventScroll:true});
@@ -485,35 +487,62 @@ window.POLE_AUDIO = {"theme": "SUQzBAAAAAAAIlRTU0UAAAAOAAADTGF2ZjYxLjcuMTAzAAAAA
   });
   window.addEventListener('resize',()=>{if(state.phase==='result')sizeFireworks();});
   window.addEventListener('pagehide',()=>{cancelAnimationFrame(animationId);stopFireworks();sound.stopMusic();});
-  let hostReady=false,sharedActive=false;
+  let streamLoaded=false;
+  let hostReady=false,sharedActive=false,sharedPlayersCount=0,removingAll=false,sharedRefreshVersion=0;
   async function hostAction(payload){
     const r=await fetch('/api/admin/action',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
     const result=await r.json();if(!r.ok)throw Error(result.error||'Дію не виконано.');return result;
   }
   async function refreshShared(){
     if(!hostReady)return;
+    const version=++sharedRefreshVersion;
     try{
       const r=await fetch('/api/state',{cache:'no-store'});if(!r.ok)throw Error('Зв’язок із сервером втрачено.');
-      const x=await r.json();sharedActive=!!x.active;
-      $('hostStatus').textContent=(x.registrationOpen?'Запис відкритий':'Запис закритий')+' · '+x.players.length+' учасників'+(x.active?' · крутка триває':'');
-      $('hostOpen').disabled=sharedActive||x.registrationOpen;$('hostClose').disabled=sharedActive||!x.registrationOpen;
+      const x=await r.json();if(version!==sharedRefreshVersion)return;sharedActive=!!x.active;sharedPlayersCount=x.players.length;if(!streamLoaded){$('streamUrl').value=x.streamVideoId?'https://www.youtube.com/watch?v='+x.streamVideoId:'';streamLoaded=true;}
+      $('hostStatus').textContent=(x.registrationOpen?'Запис відкритий':'Запис закритий')+' · '+x.players.length+' учасників · '+x.totalTickets+' квитків на раунд '+x.nextRound+(x.active?' · крутка триває':'');
+      $('hostOpen').disabled=removingAll||sharedActive||x.registrationOpen;$('hostClose').disabled=removingAll||sharedActive||!x.registrationOpen;
+      $('hostRemoveAll').disabled=removingAll||sharedActive||!sharedPlayersCount;
       if(state.phase==='welcome'||state.phase==='ready'){
-        const names=x.players.map(p=>p.nickname);
-        if(JSON.stringify(names)!==JSON.stringify(state.entries)){state.entries=names;state.angle=0;drawWheel();renderEntries();}
+        const names=x.entries;
+        const weights=x.players.map(p=>p.tickets);if(JSON.stringify([names,weights])!==JSON.stringify([state.entries,state.weights])){state.entries=names;state.weights=weights;state.angle=0;drawWheel();renderEntries();}
         state.history=x.history.map(d=>({name:d.name,count:d.count,round:d.round,at:new Date(d.finishedAt).toISOString()}));renderHistory();
         state.round=x.active?.round||((x.history[0]?.round||0)+1);$('roundNumber').textContent=String(state.round).padStart(2,'0');
-        $('spinBtn').disabled=sharedActive||state.phase!=='ready'||names.length<2;
+        $('spinBtn').disabled=removingAll||sharedActive||state.phase!=='ready'||names.length<2;
       }
       const list=$('hostPlayers');list.replaceChildren();
       x.players.forEach(p=>{
         const row=document.createElement('div');row.className='host-row';
-        const name=document.createElement('span');name.textContent=p.nickname;
-        const del=document.createElement('button');del.textContent='Прибрати';del.disabled=sharedActive;
+        const name=document.createElement('span');name.textContent=p.nickname+' · '+p.tickets+' кв. · '+(p.tickets/x.totalTickets*100).toLocaleString('uk-UA',{maximumFractionDigits:2})+'%';
+        const del=document.createElement('button');del.textContent='Прибрати';del.disabled=removingAll||sharedActive;
         del.addEventListener('click',async()=>{if(!confirm('Прибрати '+p.nickname+' зі списку?'))return;try{await hostAction({action:'remove',id:p.id});await refreshShared();}catch(e){notify(e.message)}});
         row.append(name,del);list.append(row);
       });
-    }catch(e){sharedActive=true;$('hostStatus').textContent=e.message;$('spinBtn').disabled=true;}
+      const dr=await fetch('/api/admin/donations',{cache:'no-store'});
+      if(version!==sharedRefreshVersion)return;
+      const donationList=$('hostDonations');donationList.replaceChildren();
+      if(dr.ok){const dx=await dr.json();for(const d of dx.donations){
+        const row=document.createElement('p');row.textContent=d.pub_id+' · '+(d.amount_minor/100).toLocaleString('uk-UA')+' грн · '+(d.nickname||'⚠ Без прив’язки — звірити')+' · раунд '+d.round;donationList.append(row);
+      }if(!dx.donations.length)donationList.textContent='Підтверджених донатів ще немає.';}
+      else donationList.textContent='Не вдалося завантажити донати.';
+    }catch(e){if(version!==sharedRefreshVersion)return;sharedActive=true;$('hostStatus').textContent=e.message;for(const id of ['spinBtn','hostOpen','hostClose','hostRemoveAll'])$(id).disabled=true;}
   }
+  $('streamForm').addEventListener('submit',async event=>{event.preventDefault();try{await hostAction({action:'stream',url:$('streamUrl').value.trim()});$('streamStatus').textContent=$('streamUrl').value.trim()?'Стрім прив’язано. Екран оновиться у всіх глядачів.':'Стрім від’єднано.';}catch(e){$('streamStatus').textContent=e.message}});
+  $('hostRemoveAll').addEventListener('click',async()=>{
+    if(!hostReady||removingAll||sharedActive||!sharedPlayersCount)return;
+    if(!confirm(`Видалити всіх учасників зі списку (${sharedPlayersCount})?\nЦю дію неможливо скасувати. Історія круток збережеться.`))return;
+    removingAll=true;++sharedRefreshVersion;
+    $('hostRemoveAll').textContent='Видаляємо…';
+    for(const button of document.querySelectorAll('#hostPanel button'))button.disabled=true;
+    $('spinBtn').disabled=true;
+    try{
+      const result=await hostAction({action:'removeAll',confirmed:true});
+      notify(`Видалено учасників: ${result.deleted}.`);
+    }catch(e){notify(e.message);}
+    finally{
+      removingAll=false;$('hostRemoveAll').textContent='Видалити всіх учасників';
+      await refreshShared();
+    }
+  });
   $('hostLogin').addEventListener('submit',async event=>{
     event.preventDefault();$('hostError').textContent='';
     const r=await fetch('/api/admin/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({pin:$('hostPin').value})});

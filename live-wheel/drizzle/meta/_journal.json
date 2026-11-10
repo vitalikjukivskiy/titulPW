@@ -8,6 +8,20 @@
       "when": 1790504790486,
       "tag": "0000_nice_gauntlet",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1792011659999,
+      "tag": "0001_chunky_roxanne_simpson",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1794308846389,
+      "tag": "0002_donatello_tickets",
+      "breakpoints": true
     }
   ]
 }
