@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useRef } from "react";
 
+import {sectors} from "@/lib/odds";
 const TAU=Math.PI*2;
 const colors=["#c49b57","#7c3a51","#286b66","#527795","#b66b43","#44435e","#a4575d","#779474","#d6b681","#714a73","#457c93","#af8555"];
 const normalize=(n:number)=>((n%TAU)+TAU)%TAU;
@@ -12,18 +13,19 @@ function progress(t:number){
  const q=(t-b)/d;return(b-a/2+d*(q-q*q+q*q*q/3))/total;
 }
 
-export default function LiveWheel({entries,active,startedAt,clockOffset,winnerIndex}:{entries:string[];active:boolean;startedAt?:number;clockOffset:number;winnerIndex?:number}){
+export default function LiveWheel({entries,weights,active,startedAt,clockOffset,winnerIndex}:{entries:string[];weights:number[];active:boolean;startedAt?:number;clockOffset:number;winnerIndex?:number}){
  const canvas=useRef<HTMLCanvasElement>(null),angle=useRef(0),hadActive=useRef(false);
- const key=entries.join("\u0000");
+ const key=entries.join("\u0000")+JSON.stringify(weights);
+ const slices=sectors(entries.map((_,i)=>weights[i]||5));
  useEffect(()=>{
   const el=canvas.current;if(!el)return;
   const ctx=el.getContext("2d");if(!ctx)return;
   const size=800,r=393,n=entries.length;
   ctx.clearRect(0,0,size,size);ctx.save();ctx.translate(size/2,size/2);
   if(!n){ctx.beginPath();ctx.arc(0,0,r,0,TAU);ctx.fillStyle="#503142";ctx.fill();ctx.restore();return}
-  const arc=TAU/n;
+
   for(let i=0;i<n;i++){
-   const middle=-Math.PI/2+i*arc,start=middle-arc/2;
+   const arc=slices[i].width*TAU,middle=-Math.PI/2+slices[i].middle*TAU,start=-Math.PI/2+slices[i].start*TAU;
    ctx.beginPath();ctx.moveTo(0,0);ctx.arc(0,0,r,start,start+arc);ctx.closePath();
    ctx.fillStyle=colors[i%colors.length];ctx.fill();ctx.strokeStyle="#f9dba199";ctx.lineWidth=n>40?1:2;ctx.stroke();
    ctx.save();ctx.rotate(middle);ctx.translate(r*.64,0);ctx.rotate(Math.PI/2);
@@ -50,7 +52,7 @@ export default function LiveWheel({entries,active,startedAt,clockOffset,winnerIn
    };
    tick();
   }else if(entries.length&&winnerIndex!==undefined){
-   const target=normalize(-winnerIndex*TAU/entries.length);
+   const target=normalize(-slices[winnerIndex].middle*TAU);
    if(hadActive.current&&!reduced){
     hadActive.current=false;
     const from=angle.current,to=from+TAU+normalize(target-normalize(from)),since=performance.now();

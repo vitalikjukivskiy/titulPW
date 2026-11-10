@@ -1,4 +1,5 @@
 import { cookie, db, fail, json, sameOrigin, settleActive } from "@/lib/show";
+import { donationCode } from "@/lib/tickets";
 export async function POST(request:Request){
  if(!sameOrigin(request))return fail("Недозволений запит.",403);
  try{
@@ -12,8 +13,8 @@ export async function POST(request:Request){
   const existing=cookie(request,"show_device");
   if(existing&&await db().prepare("SELECT id FROM players WHERE device_id = ?").bind(existing).first())return fail("Ти вже записався. Одна заявка на пристрій.",409);
   const device=existing&&/^[a-f0-9-]{36}$/.test(existing)?existing:crypto.randomUUID();
-  const result=await db().prepare("INSERT INTO players (nickname,name_key,device_id,created_at) SELECT ?,?,?,? WHERE COALESCE((SELECT registration_open FROM settings WHERE id=1),1)=1 AND NOT EXISTS (SELECT 1 FROM draws WHERE finished_at IS NULL) AND (SELECT COUNT(*) FROM players)<100")
-   .bind(name,nameKey,device,Date.now()).run();
+  const result=await db().prepare("INSERT INTO players (nickname,name_key,device_id,created_at,donation_code) SELECT ?,?,?,?,? WHERE COALESCE((SELECT registration_open FROM settings WHERE id=1),1)=1 AND NOT EXISTS (SELECT 1 FROM draws WHERE finished_at IS NULL) AND (SELECT COUNT(*) FROM players)<100")
+   .bind(name,nameKey,device,Date.now(),donationCode()).run();
   if(!result.meta.changes)return fail("Реєстрація закрита або список заповнений.",409);
   return json({ok:true},201,{"Set-Cookie":`show_device=${device}; Path=/; HttpOnly; ${new URL(request.url).protocol==="https:"?"Secure; ":""}SameSite=Lax; Max-Age=2592000`});
  }catch(e){if(String(e).includes("UNIQUE"))return fail("Такий нік уже в списку.",409);console.error("register error",e);return fail("Не вдалося записати. Спробуй пізніше.",503)}

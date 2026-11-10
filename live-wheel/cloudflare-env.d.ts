@@ -4,5 +4,6 @@ declare namespace Cloudflare {
     BUCKET?: R2Bucket;
     ADMIN_PIN?: string;
     SESSION_SECRET?: string;
+    DONATELLO_CALLBACK_KEY?: string;
   }
 }

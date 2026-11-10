@@ -16,8 +16,8 @@ export async function isHost(request:Request){
  return diff===0;
 }
 export function sameOrigin(request:Request){return request.headers.get("origin")===new URL(request.url).origin}
-export type Player={id:number;nickname:string;created_at:number};
-export type Draw={id:number;round:number;entries:string;winner_index:number;started_at:number;finished_at:number|null};
+export type Player={id:number;nickname:string;created_at:number;taps:number};
+export type Draw={id:number;round:number;entries:string;winner_index:number;started_at:number;finished_at:number|null;weights:string|null};
 export async function settleActive(){
  const q=await db().prepare("SELECT * FROM draws WHERE finished_at IS NULL ORDER BY id DESC LIMIT 1").first<Draw>();
  if(q&&Date.now()>=q.started_at+60000){await db().prepare("UPDATE draws SET finished_at = ? WHERE id = ? AND finished_at IS NULL").bind(q.started_at+60000,q.id).run();q.finished_at=q.started_at+60000}
