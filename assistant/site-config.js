@@ -1,7 +1,7 @@
 // Налаштування власника. Не додавайте сюди секрети або ключі платіжного сервісу.
 window.CYBERPW_SITE_CONFIG = {
   "productName": "CyberPW Assistant",
-  "downloadUrl": "https://github.com/vitalikjukivskiy/cyberpw-assistant-releases/releases/download/untagged-a9fee4980c63f662e286/CyberPW-Assistant-Setup.exe",
+  "downloadUrl": "https://github.com/vitalikjukivskiy/cyberpw-assistant-releases/releases/download/v2.0.92-beta/CyberPW-Assistant-Setup.exe",
   "releasesUrl": "https://github.com/vitalikjukivskiy/cyberpw-assistant-releases/releases",
   "forumUrl": "https://forum.cyberpw.fun/index.php?threads/fox-face-cyberpw-assistant-zagalnij-gajd-po-mozlivostah.317/",
   "youtubeUrl": "https://www.youtube.com/@Vitalik_Juk",
