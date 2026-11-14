@@ -65,7 +65,7 @@ export default function LiveWheel({entries,active,startedAt,clockOffset,winnerIn
   return()=>cancelAnimationFrame(frame);
  },[active,startedAt,clockOffset,key,winnerIndex,entries.length]);
  return <div className="spectator-wheel" role="img" aria-label={active?`Барабан обертається. Учасників: ${entries.length}`:winnerIndex!==undefined?`Барабан зупинився на ${entries[winnerIndex]}`:`Барабан із ${entries.length} учасниками`}>
-  <div className="wheel-lamps" aria-hidden="true"><canvas ref={canvas} width={800} height={800}/><span className="wheel-hub">✦<small>ПОЛЕ<br/>ЧУДЕС</small></span></div>
+  <div className={"topchyk-pilot"+(active?" topchyk-pilot-active":"")} aria-hidden="true"><span className="topchyk-spark">✦</span><span className="topchyk-wings">🪽</span><span className="topchyk-face">🧚‍♂️</span><span className="topchyk-wings second">🪽</span><span className="topchyk-sign">ТОПЧИК КРУТИТЬ!</span></div>\n  <div className="wheel-lamps" aria-hidden="true"><canvas ref={canvas} width={800} height={800}/><span className="wheel-hub">✦<small>ПОЛЕ<br/>ЧУДЕС</small></span></div>
   <div className="wheel-pointer" aria-hidden="true" />
  </div>;
 }
