@@ -200,3 +200,20 @@ export const DONORS:Donor[]=[
 ];
 export const UAH_RECORD_COUNT=55;
 export const VERIFIED_DONOR_COUNT=23;
+
+/** Окремий публічний топ із панелі Donatello на Twitch Kit_Mihaylo (14.11.2026).
+ * 4.3K / 4.0K / 1.8K — округлені панеллю значення, це не точні виплати.
+ * Дані не змішуються із 55 гривневими транзакціями із часткового списку.
+ */
+export const PUBLIC_DONATELLO_TOP=[
+{name:"СедАнтоній (S-очка)",amount:"≈ 4,3 тис. ₴"},
+{name:"CYBER",amount:"≈ 4,0 тис. ₴"},
+{name:"YouTube NOTACTICC",amount:"≈ 1,8 тис. ₴"},
+{name:"собачка",amount:"≈ 1,0 тис. ₴"},
+{name:"Псіна",amount:"850 ₴"},
+{name:"Legolasik",amount:"766 ₴"},
+{name:"Котику від Лиса",amount:"740 ₴"},
+{name:"Sima",amount:"600 ₴"},
+{name:"MinaTo (Вова)",amount:"500 ₴"},
+{name:"Короп",amount:"500 ₴"}
+] as const;
