@@ -15,7 +15,15 @@ featured.replaceChildren();list.replaceChildren();
 if(!q){for(const [i,d] of donors.slice(0,3).entries()){const c=document.createElement('article');c.className='donor-medal';const crown=document.createElement('div');crown.textContent=['👑','🥈','🥉'][i];crown.className='donor-crown';const n=document.createElement('strong');n.textContent=d.name;const amount=document.createElement('b');amount.textContent=money(d.total);c.append(crown,n,amount);featured.append(c)}}
 shown.forEach(d=>{const item=document.createElement('div');item.className='donor-item';const name=document.createElement('strong');name.textContent=d.name;const amt=document.createElement('span');amt.textContent=money(d.total)+' · '+d.count+' дон.';item.append(name,amt);list.append(item)});if(!shown.length)list.textContent='Нікого не знайдено.'}
 filter.addEventListener('input',draw);draw()}
-function init(){render(document.getElementById('donorWall'));render(document.getElementById('donorWallMini'));const count=document.getElementById('donorCount');if(count)count.textContent=donors.length}
+function renderVillage(){
+const root=document.getElementById('donorVillage');if(!root)return;root.replaceChildren();
+donors.forEach((d,i)=>{const card=document.createElement('button');card.type='button';card.className='donor-house';
+const icon=document.createElement('span');icon.className='house-icon';icon.textContent=['🏰','🏡','🏠','🏘️','🏯'][i%5];
+const name=document.createElement('strong');name.textContent=d.name;const amount=document.createElement('small');amount.textContent=money(d.total)+' · '+d.count+' дон.';
+card.append(icon,name,amount);card.addEventListener('click',()=>{document.getElementById('donorHouseName').textContent=d.name;document.getElementById('donorHouseDetails').textContent='Будинок №'+(i+1)+' у місті донатерів. '+money(d.total)+' за '+d.count+' донатів із наданого списку. Дякуємо тобі за підтримку!';document.getElementById('donorHouseDialog').showModal()});root.append(card)});
+document.getElementById('closeDonorHouse').addEventListener('click',()=>document.getElementById('donorHouseDialog').close());
+}
+function init(){renderVillage();render(document.getElementById('donorWall'));render(document.getElementById('donorWallMini'));const count=document.getElementById('donorCount');if(count)count.textContent=donors.length}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
 window.KIT_DONORS=donors;
 })();
