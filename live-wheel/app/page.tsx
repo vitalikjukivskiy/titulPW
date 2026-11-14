@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState, type FormEvent } from "react";
 import LiveWheel from "./live-wheel";
+import DonorCity from "./donor-city";
 type Player={id:number;nickname:string};
 type Draw={id:number;round:number;name:string;count:number;entries:string[];winnerIndex:number;finishedAt:number};
 type State={players:Player[];history:Draw[];active:{round:number;startedAt:number;count:number;entries:string[]}|null;registrationOpen:boolean;myPlayerId:number|null;serverNow:number};
@@ -26,7 +27,7 @@ export default function Home(){
  const shownEntries=data?.active?.entries||last?.entries||data?.players.map(p=>p.nickname)||[];
  return <main className="live-page"><div className="live-wrap">
  <header className="live-header"><div className="brand"><b>✦</b><span>ПОЛЕ <em>ЧУДЕС</em><small>РОЗІГРАШ У ПРЯМОМУ ЕФІРІ</small></span></div><span className="status"><i/>{data?.active?"БАРАБАН КРУТИТЬСЯ":"ЧЕКАЄМО НА РАУНД"}</span></header>
- <div className="live-grid"><section className="main-column"><div className="eyebrow">✦ &nbsp; ПРЯМИЙ ЕФІР &nbsp; ✦</div><h1>Твій шанс<br/><span>на барабані.</span></h1><p className="lead">Впиши нік персонажа, щоб потрапити до наступної крутки. Результат з’явиться тут одразу після завершення раунду.</p>
+ <div className="live-grid"><section className="main-column"><div className="eyebrow">✦ &nbsp; ПРЯМИЙ ЕФІР &nbsp; ✦</div><h1>Твій шанс<br/><span>на барабані.</span></h1><p className="lead">Впиши нік персонажа та бери участь безкоштовно. Один нік — один рівний шанс. Донати, лайки й підписки ніяк не впливають на перемогу. Результат з’явиться після завершення раунду.</p>
  <div className="draw-card" aria-live="polite">
   <div className="eyebrow">{data?.active?"РАУНД "+data.active.round+" ТРИВАЄ":last?"ОСТАННЯ КРУТКА":"БАРАБАН ГОТОВИЙ"}</div>
   <LiveWheel entries={shownEntries} active={!!data?.active} startedAt={data?.active?.startedAt} clockOffset={clockOffset} winnerIndex={data?.active?undefined:last?.winnerIndex}/>
@@ -34,8 +35,9 @@ export default function Home(){
   <p>{data?.active?remaining+" с до результату · "+data.active.count+" учасників":last?"Раунд "+last.round+" · 1 із "+last.count:"Слідкуй за ефіром разом із нами"}</p>
   {data?.active&&<div className="progress"><span style={{width:Math.max(0,100-remaining/60*100)+"%"}}/></div>}
  </div></section>
- <aside className="side"><section className="panel"><div className="eyebrow">01 / УЧАСТЬ</div><h2>Записатися на колесо</h2>{!data?<p>{offline?"Немає зв’язку. Онови сторінку.":"Завантажуємо список…"}</p>:mine?<div className="registered"><small>✓ ТИ В СПИСКУ</small><strong>{mine.nickname}</strong><p>Один нік — одна заявка. Твоя участь збережена.</p></div>:!data.registrationOpen?<p>Реєстрацію закрито на час раунду. Зачекай.</p>:<form onSubmit={register}><label htmlFor="nick">Нік персонажа в Perfect World</label><input id="nick" minLength={2} maxLength={24} value={nick} onChange={e=>setNick(e.target.value)} placeholder="Наприклад, VitalikPW" required/><button disabled={busy}>{busy?"ЗАПИСУЄМО…":"ВЗЯТИ УЧАСТЬ ↗"}</button><p className="hint">Вказуй свій ігровий нік: за ним ведучий знайде переможця.</p></form>}{message&&<p role="status">{message}</p>}</section>
+ <aside className="side"><section className="panel"><div className="eyebrow">01 / УЧАСТЬ</div><h2>Записатися на колесо</h2>{!data?<p>{offline?"Немає зв’язку. Онови сторінку.":"Завантажуємо список…"}</p>:mine?<div className="registered"><small>✓ ТИ В СПИСКУ</small><strong>{mine.nickname}</strong><p>Один нік — одна заявка. Твоя участь збережена.</p></div>:!data.registrationOpen?<p>Реєстрацію закрито на час раунду. Зачекай.</p>:<form onSubmit={register}><label htmlFor="nick">Нік персонажа в Perfect World</label><input id="nick" minLength={2} maxLength={24} value={nick} onChange={e=>setNick(e.target.value)} placeholder="Наприклад, VitalikPW" required/><button disabled={busy}>{busy?"ЗАПИСУЄМО…":"ВЗЯТИ УЧАСТЬ ↗"}</button><p className="hint">Без квитків і платних бонусів. Кожен зареєстрований нік має однаковий шанс.</p></form>}{message&&<p role="status">{message}</p>}</section>
  <section className="panel"><div className="eyebrow">02 / СПИСОК · {data?.players.length??"—"}</div><h2>Учасники</h2><div className="players">{data?.players.length?data.players.map((p,i)=><div key={p.id}><span>{String(i+1).padStart(2,"0")}</span><strong>{p.nickname}</strong>{p.id===data.myPlayerId&&<small>ТИ</small>}</div>):<p>Поки нікого немає. Будь першим!</p>}</div></section></aside></div>
+ <DonorCity/>
  <section className="history panel"><div className="eyebrow">АРХІВ ЕФІРУ</div><h2>Історія круток</h2><div className="history-grid">{data?.history.length?data.history.map(d=><article key={d.id}><small>РАУНД {String(d.round).padStart(2,"0")}</small><strong>{d.name}</strong><span>1 із {d.count} · {new Date(d.finishedAt).toLocaleTimeString("uk-UA",{hour:"2-digit",minute:"2-digit"})}</span></article>):<p>Результати з’являться після першої крутки.</p>}</div></section>
- <footer>✦ &nbsp; ПОЛЕ ЧУДЕС <span>Одна заявка на учасника · Переможця визначає випадок</span></footer></div></main>
+ <footer>✦ &nbsp; ПОЛЕ ЧУДЕС <span>Один нік = один шанс · Без квитків, лайків і платних переваг</span></footer></div></main>
 }
