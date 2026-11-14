@@ -8,3 +8,57 @@
 .side{display:grid;gap:19px;align-content:start}.panel{background:#2c1a25;border:1px solid #dcb07842;padding:27px}.panel h2{font:600 27px 'Playfair Display',Georgia,serif;margin:13px 0 24px}.panel p{line-height:1.55;color:#c9afa6}.panel label{font-size:14px;display:block;margin-bottom:10px}.panel input{width:100%;background:#190f18;color:#f6e6cb;border:1px solid #bb8d66;padding:15px;border-radius:3px;outline:none;font-size:16px}.panel input:focus{border-color:#f2cd8e;box-shadow:0 0 0 2px #f2cd8e44}.panel button{width:100%;padding:16px;margin-top:12px;background:#d7ae6b;color:#291822;border:0;font-weight:700;letter-spacing:1px}.panel button:hover{background:#f3d193}.hint{font-size:13px}.registered{border:1px solid #c7a57977;padding:17px;background:#1f1520}.registered small{display:block;color:#e4c084;letter-spacing:1.5px}.registered strong{display:block;font-size:24px;margin-top:9px;overflow-wrap:anywhere}.registered p{font-size:14px;margin-bottom:0}
 .players{max-height:320px;overflow:auto}.players>div{display:flex;gap:12px;align-items:center;padding:11px 0;border-top:1px solid #ffffff17}.players>div span{font-size:12px;color:#bb936f}.players strong{font-size:15px;overflow-wrap:anywhere;min-width:0}.players small{margin-left:auto;color:#e6bd81}.history{margin-bottom:44px}.history-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.history-grid article{padding:18px;background:#1e141e;border:1px solid #e7bd7034}.history-grid article>*{display:block}.history-grid article small{font-size:11px;letter-spacing:1px;color:#cfaa73}.history-grid article strong{font:600 22px 'Playfair Display',Georgia,serif;margin:10px 0;overflow-wrap:anywhere}.history-grid article span{font-size:13px;color:#c1a9a0}footer{display:flex;justify-content:space-between;border-top:1px solid #ffffff20;padding:25px 0 33px;color:#d9b277;font-size:11px;letter-spacing:1.5px}footer span{color:#a78f8b;letter-spacing:0}
 @media(max-width:830px){.live-wrap{padding:0 20px}.live-grid{grid-template-columns:1fr;gap:24px;padding-top:45px}.side{grid-template-columns:repeat(2,minmax(0,1fr))}.history-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:590px){.live-header{height:80px}.brand{font-size:17px}.brand>b{font-size:30px}.brand small{font-size:8px}.status{font-size:0}.status i{margin:0}.main-column h1{font-size:49px}.lead{font-size:16px}.side,.history-grid{grid-template-columns:1fr}.draw-card{min-height:250px}footer{display:block;line-height:2}}
+
+
+/* TOPCHYK — animated stream mascot near the real synced wheel */
+.topchyk-pilot{position:absolute;left:-12%;top:8%;z-index:5;pointer-events:none;display:flex;align-items:center;filter:drop-shadow(0 8px 8px #150d2299);animation:topchyk-flight 5s ease-in-out infinite alternate;white-space:nowrap}
+.topchyk-pilot-active{animation-duration:2.2s}
+.topchyk-face{font-size:clamp(38px,6.5vw,67px);transform:rotate(11deg)}
+.topchyk-wings{font-size:clamp(26px,4vw,42px);transform:rotate(-22deg);animation:topchyk-flap .5s ease-in-out infinite alternate}
+.topchyk-wings.second{transform:scaleX(-1) rotate(-22deg);animation-direction:alternate-reverse}
+.topchyk-sign{position:absolute;left:42%;top:86%;background:#ffe9a3;color:#4d2439;padding:5px 8px;border-radius:10px;font-size:10px;font-weight:900;box-shadow:0 4px 0 #b76a5a;transform:rotate(-9deg)}
+.topchyk-spark{position:absolute;left:12%;top:-12%;color:#fff3af;font-size:24px;animation:topchyk-flap 1s ease-in-out infinite alternate}
+@keyframes topchyk-flight{0%{transform:translate(0,0) rotate(-9deg)}45%{transform:translate(32px,-16px) rotate(2deg)}100%{transform:translate(72px,10px) rotate(12deg)}}
+@keyframes topchyk-flap{to{filter:brightness(1.5);scale:1.1}}
+
+/* Donor city, built into the existing live draw page */
+.donor-town{position:relative;margin:18px 0 42px;padding:clamp(20px,3.5vw,40px);background:linear-gradient(145deg,#38213c,#22162c 55%,#302029);border:1px solid #e2b97277;box-shadow:0 25px 75px #09070d5c;overflow:hidden}
+.donor-town:before{content:"✦ ✧ ✦";position:absolute;right:12px;top:9px;color:#e0bf7c55;font-size:19px;letter-spacing:9px}
+.town-top{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:20px}
+.town-intro{max-width:740px}.town-intro h2{font:600 clamp(35px,4vw,57px)/1.08 'Playfair Display',Georgia,serif;color:#ffe0a7;margin:12px 0 15px}
+.town-intro p{font-size:16px;line-height:1.6;color:#dac4c5;margin:0 0 16px}
+.donor-primary,.town-socials a,.house-modal a{display:inline-flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#ffda84,#d69a55);border-radius:10px;color:#291727;text-decoration:none;padding:15px 17px;font-size:14px;font-weight:800;box-shadow:0 5px 0 #925c36;transition:transform .15s}
+.donor-primary:hover,.town-socials a:hover,.house-modal a:hover{transform:translateY(-2px)}
+.town-banner{border:1px solid #f3c78766;border-radius:12px;padding:13px 17px;margin:18px 0 22px;background:#e4c88b13;font-size:13px;color:#eed9b8;line-height:1.55}
+.town-visual{min-height:190px;border:2px solid #a17d57;border-radius:17px;margin-bottom:30px;position:relative;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;overflow:hidden;background:linear-gradient(0deg,#273e37bc,#405c7188 48%,#92bedb80),url('https://vitalikjukivskiy.github.io/titulPW/chat-city/assets/town.webp') center 51%/cover}
+.town-sky{align-self:center;margin:auto;color:#fff5be;font-weight:900;font-size:clamp(15px,2vw,26px);text-shadow:0 3px 7px #101c27,0 0 22px #050e25}
+.town-castles{position:relative;color:white;font-size:clamp(18px,3.4vw,37px);text-align:center;line-height:1.4;filter:drop-shadow(0 6px 4px #15152cbb)}
+.town-path{width:100%;text-align:center;padding:9px 10px;background:#291b32db;color:#ffdfa4;font-size:12px;font-weight:600}
+.town-controls{display:flex;justify-content:space-between;align-items:end;gap:18px;flex-wrap:wrap;margin-bottom:17px}
+.town-controls h3,.town-honor h3,.town-socials h3{font:600 29px 'Playfair Display',Georgia,serif;color:#ffdd99;margin:5px 0}
+.donor-search-label{display:grid;gap:6px;font-size:12px;color:#d8b5ae;min-width:min(100%,260px)}
+.donor-search-label input{padding:11px 13px;background:#1c1324;color:#fff2da;border:1px solid #c5a070;border-radius:9px;outline-offset:3px}
+.town-houses{display:grid;grid-template-columns:repeat(auto-fill,minmax(128px,1fr));gap:12px}
+.town-house{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;min-height:145px;padding:12px 8px;background:linear-gradient(#a8cbd6,#f4daa2 58%,#f7edce);border:2px solid #dfb57b;border-radius:15px;color:#332338;box-shadow:0 5px #88674e;transition:transform .18s,filter .18s;overflow-wrap:anywhere}
+.town-house:hover{transform:translateY(-5px);filter:brightness(1.06)}
+.town-house:focus-visible{outline:3px solid #fff0a7;outline-offset:4px}
+.town-home-icon{font-size:50px;filter:drop-shadow(0 3px 2px #735d5688)}
+.town-house strong{font-size:13px;line-height:1.25}.town-house small{font-size:11px;line-height:1.25;color:#654d55}
+.town-honor{margin-top:42px;padding-top:27px;border-top:1px solid #f3d09645}.town-honor p{font-size:13px;color:#cdb9b0}
+.town-podium{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:21px 0}
+.podium-card{padding:16px 11px;background:linear-gradient(145deg,#48314b,#312134);border:1px solid #deb97978;text-align:center;display:flex;align-items:center;gap:8px;flex-direction:column;border-radius:13px;overflow-wrap:anywhere}
+.podium-medal{font-size:31px}.podium-card strong{font-size:14px}.podium-card b{color:#f2c981}
+.town-ranking{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 30px;list-style-position:inside;margin:0;padding:0}
+.town-ranking li{display:flex;justify-content:space-between;gap:9px;padding:9px 0;border-bottom:1px solid #ffffff1a;font-size:13px;color:#e7d3d4;overflow-wrap:anywhere}
+.town-ranking strong{white-space:nowrap;color:#e4bf81}
+.town-socials{margin-top:35px;padding:23px;background:#1d1527;border:1px solid #d8b47154;border-radius:14px}
+.town-socials nav{display:flex;gap:10px;flex-wrap:wrap;margin:16px 0}
+.town-socials a{background:#50304e;color:#ffebcb;border:1px solid #cba475;box-shadow:none;padding:12px 15px}
+.town-socials p{color:#bdadab;font-size:12px}
+.house-modal{max-width:min(430px,92vw);background:#f7e5c7;border:3px solid #d09e58;border-radius:23px;padding:33px;text-align:center;color:#38223c;box-shadow:0 30px 90px #000a}
+.house-modal::backdrop{background:#120d1dd1}.house-modal .house-modal-emoji{font-size:67px}
+.house-modal h3{font-size:30px;margin:12px 0;overflow-wrap:anywhere}.house-modal small{letter-spacing:1.5px;color:#6b4d60}
+.house-modal p{line-height:1.5}.house-close{position:absolute;right:11px;top:10px;border:0;background:transparent;font-size:23px;color:#462d47}
+.house-modal a{margin-top:8px}
+@media(max-width:730px){.town-podium{gap:6px}.podium-card{padding:10px 5px}.podium-card strong{font-size:11px}.town-ranking{grid-template-columns:1fr}.town-visual{min-height:150px}.town-top{display:block}.donor-primary{margin:12px 0 6px}}
+@media(prefers-reduced-motion:reduce){.topchyk-pilot,.topchyk-wings,.topchyk-spark{animation:none}.town-house,.donor-primary,.town-socials a,.house-modal a{transition:none}}
