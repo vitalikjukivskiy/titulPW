@@ -1,0 +1,27 @@
+// Lightweight static regression checks: no dependencies or network needed.
+import assert from "node:assert/strict";
+import {readFileSync} from "node:fs";
+const read=p=>readFileSync(new URL(p,import.meta.url),"utf8");
+const action=read("../app/api/admin/action/route.ts");
+const register=read("../app/api/register/route.ts");
+const schema=read("../db/schema.ts");
+const page=read("../app/page.tsx");
+const town=read("../app/donor-data.ts");
+const home=read("../app/donor-city.tsx");
+assert.match(action,/const winnerIndex=randomIndex\(names\.length\)/,"Winner must be drawn uniformly from one row per nickname");
+assert.match(action,/crypto\.getRandomValues/,"Random generation must use CSPRNG");
+assert.match(action,/limit=Math\.floor\(0x100000000\/n\)\*n/,"Random selection must reject modulo bias");
+assert.match(schema,/uniqueIndex\("idx_players_name_key"\)/,"No duplicate normalized nicknames");
+assert.match(schema,/uniqueIndex\("idx_players_device_id"\)/,"One registration per device");
+assert.match(register,/const nameKey=name\.toLocaleLowerCase\("uk-UA"\)/,"Nicknames must be normalized");
+assert.doesNotMatch(action,/ticket|like|donat|weight|bonus/i,"No tickets, donations, likes or weights in server-side draw");
+assert.match(page,/Один нік — один рівний шанс/);
+assert.match(page,/<DonorCity\/>/);
+assert.match(home,/PUBLIC_DONATELLO_TOP/);
+const block=town.match(/export const DONORS:Donor\[]=([\s\S]*?);\nexport const UAH_RECORD_COUNT/);
+assert.ok(block,"Static donor data must be present");
+const donors=JSON.parse(block[1]);
+assert.equal(donors.length,31);
+assert.equal(new Set(donors.map(d=>d.name.toLocaleLowerCase("uk"))).size,donors.length);
+assert.equal(donors.filter(d=>d.total!==null).length,23);
+console.log("PASS — uniform draw source, single nick/device, no tickets, donor city: "+donors.length+" homes");
