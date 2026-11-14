@@ -10,7 +10,7 @@
   <meta property="og:url" content="https://vitalikjukivskiy.github.io/titulPW/chat-city/">
   <meta property="og:image" content="https://vitalikjukivskiy.github.io/titulPW/chat-city/assets/town.webp">
   <meta name="description" content="Місто чату Kit_Mihaylo. Знайди свій куточок на живій мальованій карті друзів стріму.">
-  <title>Місто чату — Kit_Mihaylo</title>
+  <title>Поле чудес і Місто донатерів — Кіт Михайло</title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 60'%3E%3Ctext y='47' font-size='47'%3E🐾%3C/text%3E%3C/svg%3E">
   <link rel="stylesheet" href="styles.css">
 </head>
@@ -27,15 +27,25 @@
     <symbol id="i-sound" viewBox="0 0 24 24"><path d="M4 9h4l5-4v14l-5-4H4Zm12-1a6 6 0 0 1 0 8m3-11a10 10 0 0 1 0 14"/></symbol>
   </defs></svg>
   <header class="topbar">
-    <a class="brand" href="#" aria-label="Місто чату — вся карта"><svg class="paw"><use href="#i-paw"/></svg><span>місто чату<span class="brand-dot">.</span></span></a>
+    <a class="brand" href="#" aria-label="Місто чату — вся карта"><svg class="paw"><use href="#i-paw"/></svg><span>місто донатерів<span class="brand-dot">.</span></span></a>
     <span class="brand-divider"></span><span class="channel">Kit_Mihaylo<span>Тут усі свої</span></span>
     <nav aria-label="Керування містом">
-      <span class="edition">МАЛЬОВАНИЙ СВІТ · VOL. 01</span>
+      <a class="edition" href="#roulette">🎡 КОЛЕСО</a> <a class="edition" href="#donorCity">🏠 ДОНАТЕРИ</a>
       <button id="themeBtn" class="icon-btn" aria-label="Увімкнути ніч" title="День / ніч"><svg><use href="#i-sun"/></svg></button>
       <button id="residentsBtn" class="primary-btn"><svg><use href="#i-paw"/></svg><span>Мешканці</span><b>13</b></button>
     </nav>
   </header>
   <main>
+<section id="roulette" class="kit-show" aria-label="Поле чудес Топчика">
+<div class="kit-copy"><span class="kit-kicker">✨ КІТ МИХАЙЛО ПРЕДСТАВЛЯЄ</span><h1>ПОЛЕ <em>ЧУДЕС!</em></h1>
+<p>Топчик вилетів з офісу й крутить барабан. Усі соцмережі, рефералка, Donatello та наше місто — в одному колесі!</p>
+<div class="kit-fair">⚖️ 10 однакових секторів · кожен має шанс 10%</div>
+<div class="kit-fairy" aria-label="Топчик летить із крилами">🪽🧚‍♂️🪽 <strong>ТОПЧИК ЛЕТИТЬ!</strong></div>
+<div class="kit-links"><a href="https://donatello.to/general_yogik" target="_blank" rel="noopener noreferrer">💛 Donatello / донат на місто</a><a href="https://www.twitch.tv/selo_game" target="_blank" rel="noopener noreferrer">🟣 Twitch</a><a href="https://www.youtube.com/@Vitalik_Juk" target="_blank" rel="noopener noreferrer">▶ YouTube</a><a href="https://www.tiktok.com/@kit_myhaylo" target="_blank" rel="noopener noreferrer">♫ TikTok</a><a href="https://cabinet.cyberpw.fun/register.php?ref=4550" target="_blank" rel="noopener noreferrer">🎁 Рефералка</a></div></div>
+<div class="kit-game"><div class="kit-wheel-wrap"><span class="kit-pointer" aria-hidden="true">▼</span><canvas id="kitWheel" width="900" height="900" aria-label="Колесо з десятьма рівними секторами"></canvas></div><button id="kitSpin" type="button" class="kit-spin">🎡 КРУТИТИ КОЛЕСО!</button><div id="kitOutcome" role="status" aria-live="polite" class="kit-outcome">Топчик чекає на команду. 🧚</div><div id="kitOutcomeAction" class="kit-outcome-action"></div></div></section>
+<section id="donorCity" class="donor-city"><div class="donor-heading"><div><span class="kit-kicker">🏰 НАШІ ЛЕГЕНДИ</span><h2>Місто донатерів</h2><p>Кожному донатеру — свій будинок. Ніхто не залишається без даху над головою!</p></div><a class="kit-donate" target="_blank" rel="noopener noreferrer" href="https://donatello.to/general_yogik">💝 Підтримати місто на Donatello ↗</a></div><div class="donor-notice">🏅 Стіна пошани · <strong id="donorCount">23</strong> унікальні донатери · топ за гривневими сумами з наданих записів. Тестові платежі й $T не враховані; історія неповна.</div>
+<div class="donor-layout"><div><h3>🏆 Стіна пошани й топ</h3><div id="donorWall"></div></div><div><h3>🏠 Будиночки мешканців</h3><div id="donorVillage" class="donor-village"></div></div></div><p class="donor-foot">Нижче — оригінальна інтерактивна карта міста, її старі мешканці, кіт-мер, денний та нічний режими. Усі будиночки на цій сторінці інтерактивні!</p></section>
+<dialog id="donorHouseDialog" class="donor-dialog"><button type="button" id="closeDonorHouse" class="donor-dialog-close" aria-label="Закрити">✕</button><div class="house-emoji">🏡</div><h2 id="donorHouseName"></h2><p id="donorHouseDetails"></p><a target="_blank" rel="noopener noreferrer" href="https://donatello.to/general_yogik">💖 Донат на місто ↗</a></dialog>
     <section class="map-shell" aria-label="Інтерактивна карта міста">
       <div class="intro"><div class="eyebrow"><span></span> ЗБУДОВАНО ДРУЗЯМИ СТРІМУ</div><h1>Кожен нік —<br>своя <em>історія.</em><svg viewBox="0 0 170 15" aria-hidden="true"><path d="M4 10Q80 0 165 7M28 13q67-8 115-3"/></svg></h1><p>Знайди свій куточок.<br>Зазирни до сусідів. Залишайся вдома.</p>
         <div class="search-wrap"><svg><use href="#i-search"/></svg><input id="search" placeholder="Знайти мешканця…" aria-label="Знайти мешканця" autocomplete="off"><kbd>/</kbd></div>
@@ -73,6 +83,6 @@
   </section>
   <dialog id="aboutDialog"><button id="closeAbout" class="icon-btn" aria-label="Закрити"><svg><use href="#i-close"/></svg></button><span class="about-cat">🐈‍⬛</span><div class="eyebrow">ЛАСКАВО ПРОСИМО ДОДОМУ</div><h2>Це місто — про вас.</h2><p>Кожна локація присвячена людині, яка підтримує стрім Kit_Mihaylo. Тут немає рейтингу гаманців: у кожного є свій характер, свій куточок і свої сусіди.</p><p>Натискай на таблички, шукай друзів, гуляй із гідом і спробуй нічний режим. Кота в центрі теж можна погладити.</p><p class="small">Позначки відвіданих місць і налаштування зберігаються лише в цьому браузері. Автоматичного зв’язку з донатами поки немає.</p><nav class="social-links" aria-label="Стріми та підтримка"><a href="https://www.youtube.com/@Vitalik_Juk" target="_blank" rel="noopener noreferrer">YouTube ↗</a><a href="https://www.tiktok.com/@kit_myhaylo" target="_blank" rel="noopener noreferrer">TikTok ↗</a><a href="https://www.twitch.tv/selo_game" target="_blank" rel="noopener noreferrer">Twitch ↗</a><a href="https://donatello.to/general_yogik" target="_blank" rel="noopener noreferrer">Підтримати ↗</a></nav><button id="startExploring" class="primary-btn">Ходімо гуляти <span>→</span></button></dialog>
   <div id="toast" role="status" class="toast" aria-live="polite"></div>
-  <script src="residents.js"></script><script src="app.js"></script>
+  <script src="residents.js"></script><script src="app.js"></script><script src="donors.js"></script><script src="wheel.js"></script>
 </body>
 </html>
