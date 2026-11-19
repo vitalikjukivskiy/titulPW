@@ -119,3 +119,9 @@ html{scroll-behavior:smooth}
 .city-admin button:disabled,.city-action-btn:disabled{opacity:.5;cursor:wait}
 @media(max-width:730px){.town-top-actions{max-width:100%;margin:15px 0}.town-map-actions{margin-top:14px}.city-admin-order{align-items:flex-start;flex-direction:column}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.town-landmark{transition:none}}
+
+
+/* Visible progression after host-confirmed donations */
+.town-house-upgraded{border-color:#e7aa47;box-shadow:0 5px #88674e,0 0 18px #ffd7708c;background:linear-gradient(#9ad5ea,#f6d58e 55%,#fff0c8)}
+.town-house-elite{border:3px solid #f9d364;box-shadow:0 5px #8f6742,0 0 28px #f4cb75bb, inset 0 0 16px #ffe4a0}
+.town-landmark-upgraded{border:2px solid #ffdc86;background:linear-gradient(145deg,#644257,#3e2d46);box-shadow:0 0 18px #f7bb6e44}
