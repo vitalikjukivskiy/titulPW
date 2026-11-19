@@ -62,3 +62,60 @@
 .house-modal a{margin-top:8px}
 @media(max-width:730px){.town-podium{gap:6px}.podium-card{padding:10px 5px}.podium-card strong{font-size:11px}.town-ranking{grid-template-columns:1fr}.town-visual{min-height:150px}.town-top{display:block}.donor-primary{margin:12px 0 6px}}
 @media(prefers-reduced-motion:reduce){.topchyk-pilot,.topchyk-wings,.topchyk-spark{animation:none}.town-house,.donor-primary,.town-socials a,.house-modal a{transition:none}}
+
+
+/* Kit Mykhailo City 2.0 — house orders, per-building upgrades, glory wall */
+html{scroll-behavior:smooth}
+.town-top-actions{display:flex;flex-direction:column;gap:14px;align-items:flex-start;max-width:320px}
+.town-top-actions .donor-primary{font:800 14px 'DM Sans',sans-serif;cursor:pointer;text-align:center;border:0}
+.town-jump{display:inline-flex;align-items:center;gap:6px;color:#ffe4a9;font-weight:800;text-decoration:none;border-bottom:1px solid #dab46a;padding:6px 0}
+.town-jump:hover{color:#fff}
+.town-map-actions{z-index:2;display:flex;gap:9px;flex-wrap:wrap;justify-content:center;margin:8px 10px 15px}
+.town-map-actions button,.town-map-actions a{background:#fae0a5;color:#342034;text-decoration:none;padding:9px 13px;border:1px solid #9a7044;border-radius:9px;font-weight:800;font-size:12px;box-shadow:0 4px 0 #704c4c;cursor:pointer}
+.town-map-actions a{background:#322239;color:#ffe8af;border-color:#e3bd7c}
+.town-map-actions button:hover,.town-map-actions a:hover{filter:brightness(1.1)}
+.town-level{color:#78452e;font-size:9px;letter-spacing:1px;font-weight:900}
+.town-upgrade-hint{display:block;font-weight:800;font-size:10px;color:#66405d;border-top:1px solid #70465b2e;padding-top:7px}
+.town-house{min-height:175px}
+.town-landmarks{margin-top:42px;border-top:1px solid #e4bb7b4f;padding-top:26px}
+.town-landmarks h3{font:600 29px 'Playfair Display',Georgia,serif;color:#ffdd99;margin:9px 0}
+.town-landmarks p{color:#cdb9b0;font-size:14px;max-width:740px;line-height:1.6}
+.town-landmark-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:12px;margin-top:20px}
+.town-landmark{border:1px solid #e3bf82a8;background:linear-gradient(140deg,#4b3449,#2b2337);border-radius:14px;color:#ffe9c8;min-height:158px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;padding:12px;text-align:center;transition:transform .17s}
+.town-landmark:hover{transform:translateY(-4px);background:#513854}
+.town-landmark-icon{font-size:36px}
+.town-landmark strong{font-size:14px;line-height:1.35;overflow-wrap:anywhere}
+.town-landmark small{font-size:11px;color:#d6b9ae}
+.town-landmark .town-upgrade-hint{color:#f1ce88;border-top:1px solid #d7ac7344}
+#stina-slavy{scroll-margin-top:20px}
+.city-modal-level{display:inline-flex;background:#fff1cc;border:1px solid #c69c5d;padding:6px 11px;border-radius:40px;color:#784b2c;font-weight:900;font-size:12px}
+.city-action-btn,.city-copy,.city-admin button{border:0;cursor:pointer;font-weight:800;border-radius:10px}
+.city-action-btn{display:block;width:100%;padding:14px 17px;margin-top:18px;background:#d9a55c;color:#281625;box-shadow:0 4px 0 #9a603c}
+.city-action-btn:hover{background:#eec483}
+.city-order-dialog{max-width:min(500px,94vw);width:100%;max-height:90vh;overflow-y:auto}
+.city-order-dialog .city-target{background:#efe1c9;padding:9px;border-radius:8px}
+.city-order-form{text-align:left;display:flex;flex-direction:column;gap:13px}
+.city-order-form label{font-size:13px;font-weight:800;display:flex;flex-direction:column;gap:5px}
+.city-order-form input{padding:12px;background:#fff9ee;border:1px solid #c2a18a;border-radius:8px;width:100%;color:#342038}
+.city-order-form p,.city-receipt p{font-size:13px;line-height:1.55}
+.city-order-dialog .city-order-error{padding:9px;color:#8b1c35;background:#ffe0df;border-radius:6px;font-weight:700}
+.city-receipt textarea{width:100%;resize:vertical;background:#fffaf2;color:#2c1c2a;padding:10px;border:1px solid #bba183;border-radius:7px;font-size:13px}
+.city-receipt .city-copy{display:block;margin:10px auto 15px;padding:10px;background:#e2cedf;color:#3b233f}
+.city-receipt a.city-action-btn{color:#2b1c29;text-decoration:none;box-shadow:0 4px 0 #976337}
+.city-admin{margin:35px 0 0;border:1px dashed #e4b06a;padding:25px;border-radius:13px;background:#1f1929}
+.city-admin h3{color:#ffe2ab;font:600 26px 'Playfair Display',Georgia,serif;margin:13px 0}
+.city-admin p{color:#d4bdbb;font-size:13px;line-height:1.55}
+.city-plain-btn{padding:10px 12px;background:#d1ae75;color:#2b1724}
+.city-admin-orders{display:grid;gap:8px;margin:15px 0}
+.city-admin-order{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between;padding:12px;background:#332438;border-radius:9px}
+.city-admin-order strong,.city-admin-order span{font-size:12px;overflow-wrap:anywhere}
+.city-admin-order>div{display:flex;gap:8px;flex-wrap:wrap}
+.city-admin-order button{padding:10px;color:#261924;background:#dfbd80}
+.city-admin-order .city-decline{background:#bd9dad}
+.city-admin-add{display:flex;align-items:center;flex-wrap:wrap;gap:10px;padding-top:16px;border-top:1px solid #ffffff22}
+.city-admin-add strong{flex:1 0 100%;font-size:13px}
+.city-admin-add input{background:#100e1c;color:#fff2da;border:1px solid #bda377;border-radius:7px;padding:11px;min-width:190px;flex:1}
+.city-admin-add button{background:#dabb77;color:#261a24;padding:11px 13px}
+.city-admin button:disabled,.city-action-btn:disabled{opacity:.5;cursor:wait}
+@media(max-width:730px){.town-top-actions{max-width:100%;margin:15px 0}.town-map-actions{margin-top:14px}.city-admin-order{align-items:flex-start;flex-direction:column}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.town-landmark{transition:none}}
